@@ -19,7 +19,7 @@ function Form(props) {
     }
 
     function enviar_url() {
-        fetch(`http://localhost:8000/url${props.id !== null && '/' + props.id}`, {
+        fetch(`http://127.0.0.1:8096/url${props.id !== null && '/' + props.id}`, {
             method: props.id == null ? 'POST' : 'PUT',
             headers: {
                 'Content-Type': 'application/json',
