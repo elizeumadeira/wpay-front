@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from "react-router-dom";
-// import { Link } from "react-router-dom";
-// import { storedConfigs } from '../../configs';
-// import './index.scss';
-// import consts from '../../components/token';
-// import {save_token, get_token} from '../../components/token';
 import useToken from '../../components/token';
+import utils from '../../utils/utils.js';
 
 export default (props) => {
     const [username, setUserName] = useState('');
@@ -19,12 +15,8 @@ export default (props) => {
         }
     }, [token]);
 
-    // useEffect(() => {
-    //     <Redirect to="/dashboard" />
-    // }, [redirect]);
-
     async function login(credentials) {
-        return fetch('http://127.0.0.1:8096/login', {
+        return fetch(`${utils.url_base}login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -1,0 +1,70 @@
+body {
+  background: linear-gradient(#141e30, #243b55);
+  height: 100vh;
+  color: #fff;
+}
+
+h1 {
+  text-align: center;
+  color: floralwhite;
+}
+
+button {
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0 5px;
+
+  background-color: forestgreen;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+
+  &.editar {
+    background-color: darkorange;
+  }
+
+  &.visualizar {
+    background-color: deepskyblue;
+  }
+
+  &[disabled=""] {
+    background-color: rgb(109, 139, 109);
+  }
+}
+
+.ReactModal__Content {
+  color: #000;
+
+  &>button{
+    float: right;
+  }
+
+  &>div{
+    position: relative;
+    top: 50px;
+  }
+
+  .view_url{
+    label{
+      display: block;
+      width: 100%;
+    }
+
+    iframe{
+      width: 100%;
+      border: #C6C6C6 solid 1px;
+      height: 250px;
+    }
+  }
+
+  .campo {
+    label {
+    }
+    input {
+      border-color: gray;
+    }
+
+    small {
+    }
+  }
+}

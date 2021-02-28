@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import utils from '../../utils/utils.js';
 
 function Form(props) {
     console.log('id', props);
@@ -19,7 +20,7 @@ function Form(props) {
     }
 
     function enviar_url() {
-        fetch(`http://127.0.0.1:8096/url${props.id !== null && '/' + props.id}`, {
+        fetch(`${utils.url_base}url${props.id !== null && '/' + props.id}`, {
             method: props.id == null ? 'POST' : 'PUT',
             headers: {
                 'Content-Type': 'application/json',

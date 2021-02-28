@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import utils from '../../utils/utils.js';
 
 function ViewUrl(props) {
     const [url, setUrl] = useState('');
@@ -6,7 +7,7 @@ function ViewUrl(props) {
 
     const get_content = (id) => {
         if (id !== null)
-            fetch(`http://127.0.0.1:8096/url/${id}`, {
+            fetch(`${utils.url_base}url/${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -16,19 +17,20 @@ function ViewUrl(props) {
                 .then(response => response.text())
                 .then(result => JSON.parse(result))
                 .then(url => {
+                    setStatusCode(url.status_code)
                     setUrl(url.url);
                 });
     };
 
     get_content(props.id);
-    // console.log(props)
+
+    console.log(utils.url_base);
 
     return (
-        <div>
+        <div className="view_url">
             <label>{url}</label>
-            <label>{status_code}</label>
-            <iframe src={`http://127.0.0.1:8096/url/show_content/${props.id}`}></iframe>
-            <button onClick={props.setViewOpen}>Fechar</button>
+            <label>Status Code: {status_code} {utils.dot_status_code(status_code)} </label>
+            <iframe src={`${utils.url_base}url/show_content/${props.id}`}></iframe>
         </div>
     )
 }

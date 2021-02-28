@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from "react-router-dom";
 import Modal from 'react-modal';
 import Form from './form';
-// import { Link } from "react-router-dom";
-// import { storedConfigs } from '../../configs';
-// import './index.scss';
+import '../../scss/index.scss';
 import useToken from '../../components/token';
 import ListItem from './urlitemlist';
 import ViewUrl from './view';
+import utils from '../../utils/utils.js'
 
 Modal.setAppElement('#root');
 
@@ -28,11 +27,6 @@ export default (props) => {
 
     function openViewModal() {
         setViewIsOpen(true);
-    }
-
-    function afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        // subtitle.style.color = '#f00';
     }
 
     function closeModal() {
@@ -57,7 +51,7 @@ export default (props) => {
     }, []);
 
     const get_urls_lists = () => {
-        fetch('http://127.0.0.1:8096/urls', {
+        fetch(`${utils.url_base}urls`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -90,28 +84,32 @@ export default (props) => {
     return (
         redirect ? <Redirect to="/" /> :
             <>
+                <nav>
+                    <button className="sair" onClick={() => setToken(null)}>Sair</button>
+                </nav>
+                <h1>Dashboard</h1>
+                <div id="container-dashboard">
+                    <button onClick={openModal}>Inserir URL</button>
+                    <button onClick={get_urls_lists}>Atualizar Lista</button>
+                    <div id="list">
+                        {url_list}
+                    </div>
+                </div>
+
                 <Modal
                     isOpen={modalIsOpen}
-                    onAfterOpen={afterOpenModal}
                     onRequestClose={closeModal}
                     contentLabel="Example Modal"
                 >
+                    <button className="fechar_modal" onClick={closeModal}>Fechar</button>
                     <Form setIsOpen={setIsOpen} setViewOpen={setViewIsOpen} token={token.access_token} id={idEdit} url={urlEdit} updateList={get_urls_lists} />
                 </Modal>
                 <Modal
                     isOpen={modalViewIsOpen}
                 >
-                    <ViewUrl token={token.access_token} id={idView} setViewOpen={closeViewModal}  />
+                    <button className="fechar_modal" onClick={closeViewModal}>Fechar</button>
+                    <ViewUrl token={token.access_token} id={idView} setViewOpen={closeViewModal} />
                 </Modal>
-                <button onClick={() => setToken(null)}>Sair</button>
-                <h1>Dashboard</h1>
-                <div id="container-dashboard">
-                    <button onClick={openModal}>Inserir URL</button>
-                    <button onClick={get_urls_lists}>Atualizar Lista</button>
-                    <div>
-                        {url_list}
-                    </div>
-                </div>
             </>
     )
 }
